@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/Orange</item>  <!-- kolor paska z tytułem-->
+        <item name="colorPrimaryDark">@color/Yellow</item> <!-- kolor paska systemowego i floatAction button-->
+        <item name="colorAccent">@color/Red</item> <!-- kolor czcionki w odpowiedziach na Toast-->
+    </style>
+
+</resources>

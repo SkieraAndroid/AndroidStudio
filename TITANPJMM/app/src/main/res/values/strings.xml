@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TITAN PJMM</string>
+    <string name="company_name">TITAN PJMM sp. z o.o.</string>
+    <string name="wspolnicy">Michał Rożek, Marcin Nonna, Paweł Skierski</string>
+     <string name="adres">os. Wichrowe Wzgórze 22/153</string>
+    <string name="kod">61-678 Poznań</string>
+    <string name="nip">NIP: 972-130-49-30</string>
+    <string name="krs">KRS: 0000815500 </string>
+    <string name="telefon_skiera">tel. 517 858 688 - Paweł</string>
+    <string name="telefon_rozek">tel. 797 181 741 - Michał</string>
+    <string name="email">titan.pjmm@gmail.com</string>
+    <string name="url">www.titan-pjmm.pl</string>
+    <string name="wroc">POWRÓT</string>
+    <string name="polecenie">Ułóż puzzle z naszym logo :)</string>
+    <string name="komunikat">Dane naszej firmy uzyskasz klikając \n ikonkę w prawej dolnej części ekranu</string>
+    <string name="podpowiedz">Pokaż podpowiedź</string>
+    <string name="ukryj_podpowiedz">Ukryj podpowiedź</string>
+</resources>
