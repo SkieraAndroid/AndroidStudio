@@ -1,6 +1,5 @@
 package com.example.lab4;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,15 +47,18 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
         holder.mContentView.setText(task.name + " " + task.surname);
 
         final int picPath = task.picPath;
-        Context context = holder.mView.getContext();
+        holder.mItemImageView.setImageResource(images[picPath]);
 
-            holder.mItemImageView.setImageResource(images[picPath]);
-
-
-
-
-
-
+      holder.mView.findViewById(R.id.imageButton).setOnClickListener(new View.OnClickListener() { /* Metoda wywołująca usuwanie po naciśnieciu imageButton*/
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onListFragmentBinClickInteraction(holder.mItem, position);
+                }
+            }
+        });
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +80,6 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
             }
 
         });
-
-
     }
 
     @Override
@@ -105,6 +105,4 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
             return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
-
-
 }

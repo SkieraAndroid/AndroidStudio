@@ -15,18 +15,18 @@ import com.example.lab4.R;
 /**
  * A simple {@link //Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnDeleteDialogInteractionListener} interface
+ * {@link OnCallDialogInteractionListener} interface
  * to handle interaction events.
  */
-public class DeleteDialog extends DialogFragment {
+public class CallDialog extends DialogFragment {
 
-    private OnDeleteDialogInteractionListener mListener;
+    private OnCallDialogInteractionListener mListener;
 
-    public DeleteDialog() {
+    public CallDialog() {
         // Required empty public constructor
     }
-    public static DeleteDialog newInstance(){
-        return new DeleteDialog();
+    public static CallDialog newInstance(){
+        return new CallDialog();
     }
 
 
@@ -37,13 +37,13 @@ public class DeleteDialog extends DialogFragment {
         // AlertDialog.Builder will be used to create the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the message displayed in the dialog
-        builder.setMessage(getString(R.string.delete_question));
+        builder.setMessage(getString(R.string.call_msg));
         // Set the text and action for the positive button click
         builder.setPositiveButton(getString(R.string.dialog_confirm), new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Notify the OnDeleteDialogInteractionListener interface of positive button click
-                mListener.onDeleteDialogPositiveClick(DeleteDialog.this);
+                mListener.onCallDialogPositiveClick(CallDialog.this);
             }
         });
         // Set the text and action for the negative button click
@@ -51,7 +51,7 @@ public class DeleteDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Notify the OnDeleteDialogInteractionListener interface of negative button click
-                mListener.onDeleteDialogNegativeClick(DeleteDialog.this);
+                mListener.onCallDialogNegativeClick(CallDialog.this);
             }
         });
         return builder.create();
@@ -59,8 +59,8 @@ public class DeleteDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnDeleteDialogInteractionListener) {
-            mListener = (OnDeleteDialogInteractionListener) context;
+        if (context instanceof OnCallDialogInteractionListener) {
+            mListener = (OnCallDialogInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnDeleteDialogInteractionListener");
@@ -83,8 +83,8 @@ public class DeleteDialog extends DialogFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnDeleteDialogInteractionListener {
-        void onDeleteDialogPositiveClick(DialogFragment dialog);
-        void onDeleteDialogNegativeClick(DialogFragment dialog);
+    public interface OnCallDialogInteractionListener {
+        void onCallDialogPositiveClick(DialogFragment dialog);
+        void onCallDialogNegativeClick(DialogFragment dialog);
     }
 }

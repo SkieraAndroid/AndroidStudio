@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +16,8 @@ import java.util.Random;
 
 public class LayoutNewRecord2Activity extends AppCompatActivity
 {
-
+   public Boolean phone_validation = false;
+    public Boolean date_validation = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,53 +37,71 @@ public class LayoutNewRecord2Activity extends AppCompatActivity
         EditText Data = findViewById(R.id.editTextDate);
         String Data2 = Data.getText().toString();
 
+        if(Data2.matches("([0-3]?[0-9])/([0]?[1-9]|[1]?[0-2])/([1]?[9]?[1-9]?[0-9]|[2]?[0]?[0-1]?[0-9]|[2020]{4})"))
+        {
+            date_validation = true;
+        }
+        else if(Data2.isEmpty())
+        {
+            Data2 = getString(R.string.default_data);
+            date_validation = true;
+        }
+
         EditText Telefon = findViewById(R.id.editTextPhoneNumber);
+
         String Telefon2 = Telefon.getText().toString();
+        if(Telefon2.length()==9)
+        {
+            phone_validation = true;
+        }
+        else if(Telefon2.isEmpty())
+        {
+            Telefon2 = getString(R.string.default_number);
+            phone_validation = true;
+        }
 
-        //ImageView Photo = findViewById(R.id.item_image);
-        //Photo.setImageResource(images[rand.nextInt(images.length)]);
         int picture_number = rand.nextInt(images.length);
-
-
 
         if(Imie2.isEmpty())
         {
             Imie2 = getString(R.string.default_name);
         }
-        if(Nazwisko2.isEmpty()) {
+        if(Nazwisko2.isEmpty())
+        {
             Nazwisko2 = getString(R.string.default_surname);
         }
-        if(Data2.isEmpty())
+
+        if((phone_validation == true)&&(date_validation==true))
         {
-            Data2 = getString(R.string.default_data);
-        }
-        if(Telefon2.isEmpty())
-        {
-            Telefon2 = getString(R.string.default_number);
-        }
+            TaskListContent.addItem(new TaskListContent.Task( ""+TaskListContent.ITEMS.size()+1,
+                    Imie2, Nazwisko2, Data2, Telefon2,picture_number));
 
-
-        TaskListContent.addItem(new TaskListContent.Task( ""+TaskListContent.ITEMS.size()+1,
-                Imie2, Nazwisko2, Data2, Telefon2,picture_number));
-
-
-
-       // ((TaskFragment) getSupportFragmentManager().findFragmentById(R.id.taskFragment)).notifyDataChange();
-
-        Imie.setText("");
-        Nazwisko.setText("");
-        Data.setText("");
-        Telefon.setText("");
-
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
-
+            Imie.setText("");
+            Nazwisko.setText("");
+            Data.setText("");
+            Telefon.setText("");
 
         Intent exit =
                 new Intent(getApplicationContext(),MainActivity.class);
 
         startActivityForResult(exit,BUTTON_REQUEST2);
         finish();
+        }
+         if((phone_validation == true )&&(date_validation == false))
+        {
+            Toast.makeText(this,getString(R.string.valid_data),Toast.LENGTH_LONG ).show();
+        }
+         if((date_validation == true) && (phone_validation == false))
+        {
+            Toast.makeText(this,getString(R.string.valid_phone),Toast.LENGTH_LONG ).show();
+        }
+         if((date_validation == false) && (phone_validation == false))
+        {
+            Toast.makeText(this,getString(R.string.no_valid),Toast.LENGTH_LONG ).show();
+        }
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
 
     }
 

@@ -38,9 +38,6 @@ public class TaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
@@ -93,7 +90,7 @@ public class TaskFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentClickInteraction(TaskListContent.Task task, int position);
-        void onListFragmentLongClickInteraction(int position);
+        void onListFragmentLongClickInteraction( int position);
         void onListFragmentBinClickInteraction(TaskListContent.Task task, int position);
     }
 }
