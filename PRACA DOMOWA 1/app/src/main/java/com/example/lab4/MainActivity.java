@@ -3,6 +3,7 @@ package com.example.lab4;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -57,14 +58,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentBinClickInteraction(TaskListContent.Task task, int position)
     {
-       showDeleteDialog();
+       showDeleteDialog(task.name,task.surname);
        currentItemPosition = position;
     }
 
     @Override
-    public void onListFragmentLongClickInteraction(int position) {
+    public void onListFragmentLongClickInteraction(String imie,String nazwisko, int position) {
 
-        callDialog();
+        callDialog(imie, nazwisko);
         currentItemPosition = position;
     }
 
@@ -84,26 +85,30 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void  showDeleteDialog()
+    private void  showDeleteDialog(String imie, String nazwisko)
     {
-        DeleteDialog.newInstance().show(getSupportFragmentManager(),getString(R.string.delete_dialog_tag));
+        DeleteDialog.newInstance(imie, nazwisko).show(getSupportFragmentManager(),getString(R.string.delete_dialog_tag));
     }
 
-    private void callDialog()
+    private void callDialog(String imie, String nazwisko)
     {
-        CallDialog.newInstance().show(getSupportFragmentManager(),getString(R.string.call_msg));
+
+        CallDialog.newInstance(imie, nazwisko).show(getSupportFragmentManager(),getString(R.string.call_msg));
     }
+
 
     @Override
-    public void onCallDialogPositiveClick(DialogFragment dialog) {
+    public void onCallDialogPositiveClick(DialogFragment dialog, String imie, String nazwisko) {
         if(currentItemPosition != -1 && currentItemPosition < TaskListContent.ITEMS.size())
         {
-          Toast.makeText(this,getString(R.string.try_call),Toast.LENGTH_LONG).show();
+          Toast toast = Toast.makeText(this,getString(R.string.call) + " " + imie + " " + nazwisko +"...",Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 
     @Override
-    public void onCallDialogNegativeClick(DialogFragment dialog) {
+    public void onCallDialogNegativeClick(final DialogFragment dialog, final String imie, final String nazwisko) {
 
         View v = findViewById(R.id.floatingActionButton);
 
@@ -111,10 +116,12 @@ public class MainActivity extends AppCompatActivity
                 .setAction(getString(R.string.retry_call), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //showDeleteDialog();
-                        callDialog();
+
+                        callDialog(imie, nazwisko);
                     }
                 }).show();
+
+
     }
     @Override
     public void onDeleteDialogPositiveClick(DialogFragment dialog) {
@@ -128,7 +135,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDeleteDialogNegativeClick(DialogFragment dialog) {
+    public void onDeleteDialogNegativeClick(DialogFragment dialog, final String imie, final String nazwisko) {
 
         View v = findViewById(R.id.floatingActionButton);
 
@@ -138,7 +145,7 @@ public class MainActivity extends AppCompatActivity
                     .setAction(getString(R.string.retry_msg), new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            showDeleteDialog();
+                            showDeleteDialog(imie, nazwisko);
                         }
                     }).show();
         }

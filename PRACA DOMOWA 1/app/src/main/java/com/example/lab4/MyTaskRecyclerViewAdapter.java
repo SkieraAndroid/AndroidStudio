@@ -75,7 +75,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
 
             @Override
             public boolean onLongClick(View v) {
-                mListener.onListFragmentLongClickInteraction(position);
+                mListener.onListFragmentLongClickInteraction(holder.mItem.name,holder.mItem.surname,position);
                 return false;
             }
 

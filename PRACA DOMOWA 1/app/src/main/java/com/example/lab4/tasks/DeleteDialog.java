@@ -21,12 +21,14 @@ import com.example.lab4.R;
 public class DeleteDialog extends DialogFragment {
 
     private OnDeleteDialogInteractionListener mListener;
-
-    public DeleteDialog() {
-        // Required empty public constructor
+    private String mImie;
+    private String mNazwisko;
+    public DeleteDialog(String imie, String nazwisko) {
+        this.mImie = imie;
+        this.mNazwisko = nazwisko;
     }
-    public static DeleteDialog newInstance(){
-        return new DeleteDialog();
+    public static DeleteDialog newInstance(String imie, String nazwisko){
+        return new DeleteDialog(imie, nazwisko);
     }
 
 
@@ -37,7 +39,7 @@ public class DeleteDialog extends DialogFragment {
         // AlertDialog.Builder will be used to create the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the message displayed in the dialog
-        builder.setMessage(getString(R.string.delete_question));
+        builder.setMessage(getString(R.string.delete_question) + " " + mImie + " " + mNazwisko + "?");
         // Set the text and action for the positive button click
         builder.setPositiveButton(getString(R.string.dialog_confirm), new DialogInterface.OnClickListener(){
             @Override
@@ -51,7 +53,7 @@ public class DeleteDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Notify the OnDeleteDialogInteractionListener interface of negative button click
-                mListener.onDeleteDialogNegativeClick(DeleteDialog.this);
+                mListener.onDeleteDialogNegativeClick(DeleteDialog.this, mImie,mNazwisko);
             }
         });
         return builder.create();
@@ -85,6 +87,6 @@ public class DeleteDialog extends DialogFragment {
      */
     public interface OnDeleteDialogInteractionListener {
         void onDeleteDialogPositiveClick(DialogFragment dialog);
-        void onDeleteDialogNegativeClick(DialogFragment dialog);
+        void onDeleteDialogNegativeClick(DialogFragment dialog,String imie,String nazwisko);
     }
 }

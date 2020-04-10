@@ -20,13 +20,17 @@ import com.example.lab4.R;
  */
 public class CallDialog extends DialogFragment {
 
+
+    private String mName;
+    private String mSurname;
     private OnCallDialogInteractionListener mListener;
 
-    public CallDialog() {
-        // Required empty public constructor
+    public CallDialog(String full_name,String full_surname) {
+        this.mName = full_name;
+        this.mSurname = full_surname;
     }
-    public static CallDialog newInstance(){
-        return new CallDialog();
+    public static CallDialog newInstance(String full_name, String full_surname){
+        return new CallDialog(full_name,full_surname);
     }
 
 
@@ -37,13 +41,13 @@ public class CallDialog extends DialogFragment {
         // AlertDialog.Builder will be used to create the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the message displayed in the dialog
-        builder.setMessage(getString(R.string.call_msg));
+        builder.setMessage(getString(R.string.call_msg) + " " + mName + " " + mSurname + "?");
         // Set the text and action for the positive button click
         builder.setPositiveButton(getString(R.string.dialog_confirm), new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Notify the OnDeleteDialogInteractionListener interface of positive button click
-                mListener.onCallDialogPositiveClick(CallDialog.this);
+                mListener.onCallDialogPositiveClick(CallDialog.this,mName,mSurname);
             }
         });
         // Set the text and action for the negative button click
@@ -51,7 +55,7 @@ public class CallDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Notify the OnDeleteDialogInteractionListener interface of negative button click
-                mListener.onCallDialogNegativeClick(CallDialog.this);
+                mListener.onCallDialogNegativeClick(CallDialog.this,mName,mSurname);
             }
         });
         return builder.create();
@@ -84,7 +88,7 @@ public class CallDialog extends DialogFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnCallDialogInteractionListener {
-        void onCallDialogPositiveClick(DialogFragment dialog);
-        void onCallDialogNegativeClick(DialogFragment dialog);
+        void onCallDialogPositiveClick(DialogFragment dialog,String imie, String nazwisko);
+        void onCallDialogNegativeClick(DialogFragment dialog,String imie,String nazwisko);
     }
 }
