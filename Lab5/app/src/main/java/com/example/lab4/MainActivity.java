@@ -18,6 +18,8 @@ import androidx.fragment.app.DialogFragment;
 import com.example.lab4.tasks.DeleteDialog;
 import com.example.lab4.tasks.TaskListContent;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
