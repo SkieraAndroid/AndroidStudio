@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lab6</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="my_sensors">Lista sensorów:</string>
+    <string name="sensor_name">Nazwa sensora:</string>
+    <string name="sensor_values">Cechy sensora:</string>
+
+</resources>
