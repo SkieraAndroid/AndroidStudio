@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Lab8</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Better Google Maps</string>
     <string name="last_known_loc_msg">Last known localization</string>
 </resources>
