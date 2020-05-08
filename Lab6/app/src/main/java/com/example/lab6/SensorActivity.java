@@ -14,9 +14,11 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
+
 import android.graphics.Color;
+import android.graphics.Path;
 import android.graphics.RectF;
+import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -32,7 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.nio.file.Path;
+
 
 import static java.lang.Math.abs;
 import static java.lang.Math.min;

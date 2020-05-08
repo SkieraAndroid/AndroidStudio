@@ -11,7 +11,10 @@
         layout="@layout/activity_maps"
         android:layout_width="0dp"
         android:layout_height="0dp"
-      />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageButton
         android:id="@+id/zoom_in_button"
         android:layout_width="wrap_content"
@@ -21,8 +24,8 @@
         android:background="@android:color/transparent"
         android:onClick="zoomInClick"
         android:src="@android:drawable/btn_plus"
-
-         />
+        app:layout_constraintBottom_toTopOf="@+id/zoom_out_button"
+        app:layout_constraintStart_toStartOf="parent" />
     <ImageButton
         android:id="@+id/zoom_out_button"
         android:layout_width="wrap_content"
@@ -31,5 +34,6 @@
         android:background="@android:color/transparent"
         android:onClick="zoomOutClick"
         android:src="@android:drawable/btn_minus"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
