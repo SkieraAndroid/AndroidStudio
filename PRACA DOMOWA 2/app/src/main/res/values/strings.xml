@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HW2</string>
+    <string name="title_activity_maps">Better Google Maps</string>
+    <string name="last_known_loc_msg">Last known localization</string>
+    <string name="acc">Acceleration:</string>
+    <string name="clear">Clear\n memory</string>
+</resources>

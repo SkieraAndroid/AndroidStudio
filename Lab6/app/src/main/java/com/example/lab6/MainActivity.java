@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         SensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
+        setContentView(R.layout.activity_main);
         SensorFragment sensorFragment = (SensorFragment) getSupportFragmentManager().findFragmentById(R.id.sensorList);
         sensorFragment.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_main);
+       // setContentView(R.layout.activity_main);
     }
 
     public void showSensor(AdapterView<?> parent, int position) {
