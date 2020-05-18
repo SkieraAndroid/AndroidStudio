@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     List<Marker> markerList = new ArrayList<>();
+    List<String> position_list = new ArrayList<>();
 
     private final String MAPS_JSON_FILE = "maps.json";
 
@@ -70,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         setButtonsClickListener();
 
-        restoreFromJson();
+
     }
 
 
@@ -92,15 +94,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
-       mMap = googleMap;
+
        mMap.setOnMapLoadedCallback(this);
        mMap.setOnMarkerClickListener(this);
        mMap.setOnMapLongClickListener(this);
+
+
+
     }
 
     @Override
     public void onMapLoaded() {
-
+        restoreFromJson();
     }
 
     @Override
@@ -114,6 +119,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        .title(String.format("Position: (%.2f, %.2f)" ,latLng.latitude,latLng.longitude)));
 
        markerList.add(marker);
+       position_list.add(Double.toString(latLng.latitude) + "/" + Double.toString(latLng.longitude));
+
 
     }
 
@@ -125,6 +132,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
        if(!use_floating)
         ShowAnimation();
+
+        restoreFromJson();
 
         return false;
     }
@@ -148,7 +157,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         switch (view.getId())
         {
             case R.id.clear_memory:
-                // metoda do czyszczenia pamieci
+
                 ClearMemory();
                 break;
             case R.id.float_start:
@@ -286,10 +295,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+
+
     private void saveToJson()  {
         Gson gson = new Gson();
 
-        String listJson = gson.toJson(markerList);
+        String listJson = gson.toJson(position_list);
         FileOutputStream outputStream;
 
         try {
@@ -310,6 +322,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void restoreFromJson()
     {
+       // Toast.makeText(this,"Wywołanie restore ",Toast.LENGTH_LONG).show();
+
+
         FileInputStream inputStream;
         int DEFAULT_BUFFER_SIZE = 10000;
 
@@ -317,6 +332,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String readJson;
         try
         {
+          //  Toast.makeText(this,"Wchodzę w blok try w odczycie",Toast.LENGTH_LONG).show();
             inputStream = openFileInput(MAPS_JSON_FILE);
             FileReader reader = new FileReader(inputStream.getFD());
             char[] buf = new char[DEFAULT_BUFFER_SIZE];
@@ -330,15 +346,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             reader.close();
             readJson = builder.toString();
-            Type collectionType = new TypeToken<List<Marker>>(){}.getType();
-            List<Marker> o = gson.fromJson(readJson,collectionType);
+            Type collectionType = new TypeToken<List<String>>(){}.getType();
+            List<String> o = gson.fromJson(readJson,collectionType);
             if(o != null)
             {
+
+                position_list.clear();
                 markerList.clear();
-                for(Marker marker : o)
+               // Toast.makeText(this,"Pobrana lista stringów jest nie pusta",Toast.LENGTH_LONG).show();
+                for(String string : o)
+               // for(int i =0; i<o.size();i++)
                 {
-                    markerList.add(marker);
+                    //String string = o.get(i);
+                    position_list.add(string);
+                   // Toast.makeText(this,"Jestem w pętli for",Toast.LENGTH_LONG).show();
+                    String latitude = string.substring(0,string.indexOf("/"));
+                    String longitude = string.substring(string.indexOf("/")+1);
+
+                    try {
+                        double lat = Double.parseDouble(latitude);
+                        double longi = Double.parseDouble(longitude);
+
+                       // Toast.makeText(this,"Pobieranie markera",Toast.LENGTH_LONG).show();
+
+                        Marker marker = mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(lat,longi))
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
+                                .alpha(0.8f)
+                                .title(String.format("Position: (%.2f, %.2f)" ,lat,longi)));
+
+                        markerList.add(marker);
+
+                    }
+                    catch (NumberFormatException e)
+                    {
+                      // Toast.makeText(this,"Błąd parsowania przy odczycie",Toast.LENGTH_LONG).show();
+                    }
+
+
+
                 }
+            }
+            else
+            {
+                //Toast.makeText(this,"Lista jest pusta - czyli coś nie działa zapis",Toast.LENGTH_LONG).show();
             }
         }
         catch (FileNotFoundException e)
@@ -354,6 +405,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onDestroy()
     {
+
         saveToJson();
         super.onDestroy();
     }
@@ -362,7 +414,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         //czyszczenie listy markerów systemowo
         markerList.clear();
-
+        position_list.clear();
         //czyszczenie mapy z markerów
         mMap.clear();
 
