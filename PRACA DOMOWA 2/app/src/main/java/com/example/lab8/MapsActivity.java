@@ -133,7 +133,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        if(!use_floating)
         ShowAnimation();
 
-        restoreFromJson();
 
         return false;
     }
@@ -170,6 +169,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case R.id.float_stop:
 
                EndingAnimation();
+
+               if(counter%2==1)
+               {
+                   TextAnimationEnding();
+               }
+
                break;
 
 
@@ -213,7 +218,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             TextAnimationShow();
         }
         else
-            {
+        {
             TextAnimationEnding();
         }
     }
@@ -322,7 +327,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void restoreFromJson()
     {
-       // Toast.makeText(this,"Wywołanie restore ",Toast.LENGTH_LONG).show();
+
 
 
         FileInputStream inputStream;
@@ -332,7 +337,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String readJson;
         try
         {
-          //  Toast.makeText(this,"Wchodzę w blok try w odczycie",Toast.LENGTH_LONG).show();
+
             inputStream = openFileInput(MAPS_JSON_FILE);
             FileReader reader = new FileReader(inputStream.getFD());
             char[] buf = new char[DEFAULT_BUFFER_SIZE];
@@ -353,13 +358,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 position_list.clear();
                 markerList.clear();
-               // Toast.makeText(this,"Pobrana lista stringów jest nie pusta",Toast.LENGTH_LONG).show();
+
                 for(String string : o)
-               // for(int i =0; i<o.size();i++)
+
                 {
-                    //String string = o.get(i);
+
                     position_list.add(string);
-                   // Toast.makeText(this,"Jestem w pętli for",Toast.LENGTH_LONG).show();
+
                     String latitude = string.substring(0,string.indexOf("/"));
                     String longitude = string.substring(string.indexOf("/")+1);
 
@@ -367,7 +372,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         double lat = Double.parseDouble(latitude);
                         double longi = Double.parseDouble(longitude);
 
-                       // Toast.makeText(this,"Pobieranie markera",Toast.LENGTH_LONG).show();
 
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(lat,longi))
@@ -380,17 +384,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     catch (NumberFormatException e)
                     {
-                      // Toast.makeText(this,"Błąd parsowania przy odczycie",Toast.LENGTH_LONG).show();
+
                     }
 
 
 
                 }
             }
-            else
-            {
-                //Toast.makeText(this,"Lista jest pusta - czyli coś nie działa zapis",Toast.LENGTH_LONG).show();
-            }
+
         }
         catch (FileNotFoundException e)
         {
