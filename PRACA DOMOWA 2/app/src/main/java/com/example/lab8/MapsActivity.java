@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -105,7 +105,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapLoaded() {
+
         restoreFromJson();
+
     }
 
     @Override
@@ -208,8 +210,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-
-
 
     public void TextAnimation()
     {
@@ -404,13 +404,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    protected void onDestroy()
+    protected void onStop()
     {
-
         saveToJson();
-        super.onDestroy();
+        super.onStop();
     }
-
     public void ClearMemory()
     {
         //czyszczenie listy markerów systemowo
