@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">CarManager</string>
+    <string name="task_title">Contacts</string>
+    <string name="task_description">WE TEST DIALOG</string>
+    <string name="add_task">ADD NEW TASK</string>
+
+    <string name="item_selected_msg">Selected Message</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="delete_question">Do you want to this record: </string>
+    <string name="dialog_confirm">YES</string>
+    <string name="dialog_cancel">NO</string>
+    <string name="delete_dialog_tag">Record has deleted successfully!</string>
+    <string name="long_click_msg">You done long click!</string>
+    <string name="delete_cancel_msg">You cancelled delete attempt!</string>
+    <string name="call_cancelled">Call cancelled</string>
+    <string name="retry_call">Retry call</string>
+    <string name="call">Calling</string>
+    <string name="retry_msg">Retry delete?</string>
+
+    <string name="Date">Date</string>
+
+    <string name="ADD">ADD</string>
+
+    <string name="call_msg">Call</string>
+
+
+    <string name="date">Date</string>
+    <string name="activity">Activity</string>
+    <string name="costs">Costs</string>
+    <string name="car_mileage">Car mileage</string>
+    <string name="choose_icon">Choose icon</string>
+
+    <string-array name="icons">
+        <item>Fuel</item>
+        <item>Shop</item>
+        <item>Service</item>
+    </string-array>
+
+</resources>

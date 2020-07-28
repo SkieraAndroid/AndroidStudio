@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:orientation="vertical"
+    android:scrollbarTrackHorizontal="@android:drawable/btn_default_small"
+    android:scrollbarTrackVertical="@android:drawable/btn_default"
+    tools:context=".LayoutNewRecord2Activity">
+
+
+    <EditText
+        android:id="@+id/Service_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/date" />
+
+    <EditText
+        android:id="@+id/Service_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/activity" />
+
+    <EditText
+        android:id="@+id/Service_costs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="@string/costs"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/Service_mileage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="@string/car_mileage"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:onClick="addClick"
+        android:scrollHorizontally="true"
+        android:text="@string/ADD" />
+
+
+</LinearLayout>
