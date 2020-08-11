@@ -8,6 +8,16 @@ public class Record {
     private String Mileage;
     private int PictureNumber;
 
+    public String getHash() {
+        return Hash;
+    }
+
+    public void setHash(String hash) {
+        Hash = hash;
+    }
+
+    private String Hash;
+
     public int getPictureNumber() {
         return PictureNumber;
     }

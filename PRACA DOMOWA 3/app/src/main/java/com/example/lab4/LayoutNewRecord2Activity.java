@@ -24,6 +24,10 @@ public class LayoutNewRecord2Activity extends AppCompatActivity
 {
 
    int icon_number;
+    FirebaseDatabase database;
+    DatabaseReference reference;
+    Record record = new Record();
+    long maxid = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +39,32 @@ public class LayoutNewRecord2Activity extends AppCompatActivity
 
 
 
+        reference = database.getInstance().getReference().child("Wpis serwisowy");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(snapshot.exists())
+                {
+                    maxid = snapshot.getChildrenCount();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
     public static final int BUTTON_REQUEST2 = 1;
 
-    FirebaseDatabase database;
-    DatabaseReference reference;
 
-    long maxid = 0;
+
+
 
 
     public void setSpinnerItemSelectedListener()
@@ -97,35 +120,16 @@ public class LayoutNewRecord2Activity extends AppCompatActivity
                 date, serviceActivity, costs, mileage,icon_number));
 
 
-        Record record = new Record();
-
-        reference = database.getInstance().getReference().child("Wpis serwisowy");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if(snapshot.exists())
-                {
-                    maxid = snapshot.getChildrenCount();
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        String hash = date+serviceActivity+costs+mileage;
 
         record.setDate(date);
         record.setServiceActivity(serviceActivity);
         record.setCosts(costs);
         record.setMileage(mileage);
         record.setPictureNumber(icon_number);
+        record.setHash(hash);
 
-        //reference.push().setValue(record);
+
 
         reference.child(String.valueOf(maxid+1)).setValue(record);
 

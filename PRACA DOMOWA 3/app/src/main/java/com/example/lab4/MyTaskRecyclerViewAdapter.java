@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab4.TaskFragment.OnListFragmentInteractionListener;
 import com.example.lab4.tasks.TaskListContent.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -37,7 +39,11 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
                 .inflate(R.layout.fragment_task, parent, false);
         return new ViewHolder(view);
     }
-
+    public static void DeleteRecord(String hash)
+    {
+        DatabaseReference kasowany_wpis = FirebaseDatabase.getInstance().getReference("Wpis serwisowy").child(hash);
+        kasowany_wpis.removeValue();
+    }
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
@@ -56,6 +62,10 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentBinClickInteraction(holder.mItem, position);
+
+                   //poniższa linia razem z funkcją DeleteRecord służą do kasowania wpisu z bazy - pytanie o poprawność lokalizacji
+                    DeleteRecord(holder.mItem.hash);
+
                 }
             }
         });

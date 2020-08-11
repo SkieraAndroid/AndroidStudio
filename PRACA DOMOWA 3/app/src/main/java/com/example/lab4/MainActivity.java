@@ -52,10 +52,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
-
+   // FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
 
