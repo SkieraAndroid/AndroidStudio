@@ -34,27 +34,27 @@ public class TaskListContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    public static void DeleteRecord(String hash)
+   /* public static void DeleteRecord(String hash)
     {
         DatabaseReference kasowany_wpis = FirebaseDatabase.getInstance().getReference("Wpis serwisowy").child(hash);
         kasowany_wpis.removeValue();
-    }
+    }*/
 
     public static void removeItem(int currentItemPosition) {
 
         String itemId = ITEMS.get(currentItemPosition).id;
 
-        //poniższe linie służą razem z funkcją DeleteRecord do kasowania wpisu z bazy - pytanie o poprawność lokalizacji
-       /* String kasowana_data = ITEMS.get(currentItemPosition).data;
+
+        String kasowana_data = ITEMS.get(currentItemPosition).data;
         String kasowana_aktywnosc = ITEMS.get(currentItemPosition).aktywnosc;
         String kasowany_koszt = ITEMS.get(currentItemPosition).koszt;
         String kasowany_przebieg = ITEMS.get(currentItemPosition).przebieg;
 
         String hash = kasowana_data+kasowana_aktywnosc+kasowany_koszt+kasowany_przebieg;
 
-        DeleteRecord(hash);*/
 
-
+        DatabaseReference kasowany_wpis = FirebaseDatabase.getInstance().getReference("Wpis serwisowy").child(hash);
+        kasowany_wpis.removeValue();
 
         ITEMS.remove(currentItemPosition);
         ITEM_MAP.remove(itemId);

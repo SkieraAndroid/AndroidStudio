@@ -137,6 +137,7 @@ public class LayoutNewRecord2Activity extends AppCompatActivity
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(),0);
 
+
         Intent exit =
                 new Intent(getApplicationContext(),MainActivity.class);
 

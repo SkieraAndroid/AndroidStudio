@@ -55,7 +55,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
         final int picPath = task.picPath;
         holder.mItemImageView.setImageResource(images[picPath]);
 
-      holder.mView.findViewById(R.id.imageButton).setOnClickListener(new View.OnClickListener() { /* Metoda wywołująca usuwanie po naciśnieciu imageButton*/
+      holder.mBinView.setOnClickListener(new View.OnClickListener() { /* Metoda wywołująca usuwanie po naciśnieciu imageButton*/
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
@@ -63,8 +63,6 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentBinClickInteraction(holder.mItem, position);
 
-                   //poniższa linia razem z funkcją DeleteRecord służą do kasowania wpisu z bazy - pytanie o poprawność lokalizacji
-                    DeleteRecord(holder.mItem.hash);
 
                 }
             }
@@ -101,12 +99,14 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
         public final View mView;
         public final TextView mContentView;
         public final ImageView mItemImageView;
+        public final View mBinView;
         public Task mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mItemImageView = view.findViewById(R.id.item_image);
+            mBinView = view.findViewById(R.id.imageButton);
             mContentView = view.findViewById(R.id.content);
         }
 
