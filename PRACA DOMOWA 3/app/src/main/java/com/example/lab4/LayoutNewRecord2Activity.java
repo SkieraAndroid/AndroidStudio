@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,8 @@ public class LayoutNewRecord2Activity extends AppCompatActivity
 {
 
    int icon_number;
+   boolean date_validation = false;
+   boolean cost_validation = false;
     FirebaseDatabase database;
     DatabaseReference reference;
     Record record = new Record();
@@ -116,35 +119,55 @@ public class LayoutNewRecord2Activity extends AppCompatActivity
         String mileage = miles.getText().toString();
 
 
-        TaskListContent.addItem(new TaskListContent.Task( ""+TaskListContent.ITEMS.size()+1,
-                date, serviceActivity, costs, mileage,icon_number));
+        if(date.matches("([0-3]?[0-9])-([0]?[1-9]|[1]?[0-2])-([2]?[0]?[0-2]?[0-9])"))
+        {
+            date_validation = true;
+        }
+        if(costs.matches("([0-9]?[0-9]?[0-9]?[0-9]?[,]?[0-9][0-9])|([0-9]?[0-9]?[0-9]?[,]?[0-9][0-9])([0-9]?[0-9]?[,]?[0-9][0-9])([0-9]?[,]?[0-9][0-9])"))
+        {
+            cost_validation = true;
+        }
+
+        if((date_validation==true)&&cost_validation == true) {
+            TaskListContent.addItem(new TaskListContent.Task("" + TaskListContent.ITEMS.size() + 1,
+                    date, serviceActivity, costs, mileage, icon_number));
 
 
-        String hash = date+serviceActivity+costs+mileage;
+            String hash = date + serviceActivity + costs + mileage;
 
-        record.setDate(date);
-        record.setServiceActivity(serviceActivity);
-        record.setCosts(costs);
-        record.setMileage(mileage);
-        record.setPictureNumber(icon_number);
-        record.setHash(hash);
-
-
-
-        reference.child(String.valueOf(maxid+1)).setValue(record);
+            record.setDate(date);
+            record.setServiceActivity(serviceActivity);
+            record.setCosts(costs);
+            record.setMileage(mileage);
+            record.setPictureNumber(icon_number);
+            record.setHash(hash);
 
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+            reference.child(hash).setValue(record);
 
 
-        Intent exit =
-                new Intent(getApplicationContext(),MainActivity.class);
-
-        startActivityForResult(exit,BUTTON_REQUEST2);
-       // finish();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
 
+            Intent exit =
+                    new Intent(getApplicationContext(), MainActivity.class);
+
+            startActivityForResult(exit, BUTTON_REQUEST2);
+
+        }
+        if(date_validation ==false && cost_validation == true)
+        {
+            Toast.makeText(this,getString(R.string.date_error_message),Toast.LENGTH_LONG ).show();
+        }
+        if(cost_validation == false && date_validation == true)
+        {
+            Toast.makeText(this,getString(R.string.costs_error_message),Toast.LENGTH_LONG ).show();
+        }
+        if(cost_validation == false && date_validation == false)
+        {
+            Toast.makeText(this,getString(R.string.date_error_message),Toast.LENGTH_LONG ).show();
+        }
 
 
     }

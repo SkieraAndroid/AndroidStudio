@@ -31,6 +31,9 @@
     <string name="costs">Costs</string>
     <string name="car_mileage">Car mileage</string>
     <string name="choose_icon">Choose icon</string>
+    <string name="date_error_message">Invalid input data!\n Use "-" as date separator.  </string>
+    <string name="costs_error_message">Invalid input data!\n Use "," as costs separator.</string>
+    <string name="error_message">Invalid input data!\n Use "-" as date separator and "," as costs separator.</string>
 
     <string-array name="icons">
         <item>Fuel</item>

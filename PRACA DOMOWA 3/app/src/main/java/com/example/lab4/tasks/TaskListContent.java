@@ -137,4 +137,9 @@ public class TaskListContent {
             dest.writeString(hash);
         }
     }
+    public static void clearList()
+    {
+        ITEMS.clear();
+        ITEM_MAP.clear();
+    }
 }

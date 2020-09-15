@@ -8,7 +8,7 @@ public class Record {
     private String Mileage;
     private int PictureNumber;
 
-    public String getHash() {
+    public  String getHash() {
         return Hash;
     }
 

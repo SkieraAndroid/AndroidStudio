@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -16,8 +18,12 @@ import com.example.lab4.tasks.DeleteDialog;
 import com.example.lab4.tasks.TaskListContent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
         implements TaskFragment.OnListFragmentInteractionListener
@@ -30,13 +36,47 @@ public class MainActivity extends AppCompatActivity
     public static final int BUTTON_REQUEST = 1;
     private int currentItemPosition = -1;
     public static final String taskExtra = "taskExtra";
+
+    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference mReference = mDatabase.getReference("Wpis serwisowy");
+    String przebieg;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+
+
+        mReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                RestoreDataFromFirebase();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +88,7 @@ public class MainActivity extends AppCompatActivity
                 startActivityForResult(exit,BUTTON_REQUEST);
             }
         });
+
 
     }
 
@@ -78,8 +119,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentLongClickInteraction(String data,String aktywnosc, int position) {
 
-        //callDialog(data, aktywnosc);
-        //tu zrobić edycję wpisu
         currentItemPosition = position;
     }
 
@@ -165,6 +204,39 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    public void RestoreDataFromFirebase()
+    {
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                TaskListContent.clearList();
+
+                for(DataSnapshot node : snapshot.getChildren())
+                {
+                    Record record_from_base = node.getValue(Record.class);
+
+
+                     String data2 = record_from_base.getDate();
+                     String aktywnosc2 = record_from_base.getServiceActivity();
+                     String koszt2 = record_from_base.getCosts();
+                     String przebieg2 = record_from_base.getMileage();
+
+                     int picPath = record_from_base.getPictureNumber();
+
+                    TaskListContent.addItem(new TaskListContent.Task("" + TaskListContent.ITEMS.size() + 1,
+                            data2, aktywnosc2, koszt2, przebieg2, picPath));
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 
 }
